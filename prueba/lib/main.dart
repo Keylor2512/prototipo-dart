@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';// para que funcione en la linea de coman
 import 'package:english_words/english_words.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';  //  flutter pub add flutter_colorpicker
 import 'package:pie_chart/pie_chart.dart'; //  flutter pub add pie_chart
+import 'dart:math';
+Random random = new Random();
 void main() {
   runApp(const MyApp());
 }
@@ -164,6 +166,7 @@ class _Menu extends State<Menu> {
   }
   String msg = 'Random Name Generator';
   int val = 1;
+  int graph=0;
   Color pickerColor = Color(0xffffffff);
   Color currentColor =Color(0xffffffff);
   @override
@@ -204,7 +207,15 @@ class _Menu extends State<Menu> {
                         ColorPicker(
                           pickerColor: pickerColor,
                           onColorChanged: changeColor,
+                        ),ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.red, // background
+                            onPrimary: Colors.white, // foreground
+                          ),
+                          onPressed: _changeGraph,
+                          child: Text('Cambiar Grafico'),
                         ),
+
                         PieChart(
                           dataMap: dataMap,
                           animationDuration: Duration(milliseconds: 800),
@@ -316,9 +327,20 @@ class _Menu extends State<Menu> {
   void changeColor(Color color) {
     setState(() => pickerColor = color);
   }
+
   _goMenu() {
     setState(() {
       val=1;
+    });
+  }
+  _changeGraph() {
+    setState(() {
+      dataMap = {
+        "SlowSeat": random.nextInt(50).toDouble(),
+        "MildSoul": random.nextInt(50).toDouble(),
+        "ShyCart": random.nextInt(50).toDouble(),
+        "PlainTip": random.nextInt(50).toDouble(),
+      };
     });
   }
 }
